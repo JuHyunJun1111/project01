@@ -7,9 +7,24 @@ import com.board.domain.BoardVO;
 public interface BoardDAO {
 	
 	//게시물 목록
-	public List<BoardVO> list() throws Exception;
+	public List<BoardVO> boardList() throws Exception;
+	
+	// 게시물 목록 + 페이징
+	public List<BoardVO> boardListPage(int displayPost, int postNum) throws Exception;
+	
+	//게시물 총 갯수
+	public int boardCount() throws Exception; 
 	
 	//게시물 작성	
-	public void write(BoardVO vo) throws Exception;
+	public void boardInsert(BoardVO vo) throws Exception;
+	
+	//게시물 조회 
+	public BoardVO boardView(int bno) throws Exception;
+	
+	//게시물 수정	
+	public void boardModify(BoardVO vo) throws Exception;
+	
+	//게시물 삭제	
+	public void boardDelete(int bno) throws Exception;
 
 }

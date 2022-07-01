@@ -5,18 +5,75 @@
 <mapper namespace="com.board.mappers.board">
 
 	<!-- 게시판 목록 -->
-	<select id="list" resultType="com.board.domain.BoardVO">
+	<select id="boardList" resultType="com.board.domain.BoardVO">
 		select 
-			bno, title, content, writer, regDate, viewCnt
+			bno, 
+			title, 
+			content, 
+			writer, 
+			regDate,
+			viewCnt
 		from tbl_board
 	</select> 
 	
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="boardListPage" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+		select
+			bno, 
+			title, 
+			content, 
+			writer, 
+			regDate,
+			viewCnt
+	    from tbl_board
+		order by bno desc
+		  limit #{displayPost}, #{postNum}
+	</select>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="boardCount" resultType="int">
+		select count(bno) from tbl_board
+	</select>
+	
 	<!-- 게시물 작성 -->
-	<insert id="write" parameterType="com.board.domain.BoardVO">
+	<insert id="boardInsert" parameterType="com.board.domain.BoardVO">
 		 insert into
 		  	tbl_board(title, content, writer)
 		 values( #{title}, #{content}, #{writer})
 	</insert>
+	
+	<!-- 게시물 조회 -->
+	<select id="boardView" parameterType="int" resultType="com.board.domain.BoardVO">
+		 select 
+		 	bno, 
+		 	title, 
+		 	content, 
+		 	writer,
+		 	regDate,
+		 	viewCnt
+		 from 
+		 	tbl_board 
+		 where
+		 	bno = #{bno} 	
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="boardModify" parameterType="com.board.domain.BoardVO">
+		 update tbl_board 
+		 	set title = #{title},
+		 		content = #{content},
+		 		writer = #{writer}
+		 where
+		 	bno = #{bno} 	
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<update id="boardDelete" parameterType="int">
+		 delete 
+		 	from tbl_board 
+		 where
+		 	bno = #{bno} 	
+	</update>
 
 
 </mapper>
