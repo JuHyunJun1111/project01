@@ -22,28 +22,25 @@ public class BoardController {
 	@Inject
 	BoardService service;
 	
-	//게시판 리스트 불러오기
-	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public void getList(Model model) throws Exception {
-		
-		List<BoardVO> list = null;
-		list = service.boardList();
-		
-		model.addAttribute("list", list);
-	}
 	
-	// 게시물 목록 + 페이징 추가
+	// 게시물 목록 + 페이징 + 검색
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
-	public void getListPage(Model model, @RequestParam("num") int num) throws Exception {
+	public void getListPage(Model model, @RequestParam("num") int num, 
+			@RequestParam(value = "searchType",required = false, defaultValue = "title") String searchType,
+			   @RequestParam(value = "keyword",required = false, defaultValue = "") String keyword) throws Exception {
 		
 		Page page = new Page();
 		
 		page.setNum(num);
-		page.setCount(service.boardCount());  
-
-		List list = null; 
+		page.setCount(service.boardCount(searchType, keyword));  
 		
-		list = service.boardListPage(page.getDisplayPost(), page.getPostNum());
+		//검색 타입과 검색어
+		page.setSearchType(searchType);
+		page.setKeyword(keyword);
+
+		List<BoardVO> list = null; 
+		
+		list = service.boardListPage(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
 
 		model.addAttribute("list", list); 
 		model.addAttribute("page", page);

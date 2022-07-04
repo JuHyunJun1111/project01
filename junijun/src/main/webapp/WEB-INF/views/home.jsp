@@ -10,7 +10,7 @@
 	jhj 페이지  
 </h1>
 
-<p><a href="/board/list">게시물 목록</a></p>
+<p><a href="/board/listPage?num=1">게시물 목록</a></p>
 
 
 <%-- <P>  The time on the server is ${serverTime}. </P> --%>

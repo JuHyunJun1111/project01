@@ -16,24 +16,23 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO dao;
 	
 	//게시물 목록
+//	@Override
+//	public List<BoardVO> boardList() throws Exception {
+//		// TODO Auto-generated method stub
+//		return dao.boardList();
+//	}
+	
+	//게시물 목록 + 페이징 + 검색
 	@Override
-	public List<BoardVO> boardList() throws Exception {
-		// TODO Auto-generated method stub
-		return dao.boardList();
+	public List<BoardVO> boardListPage(
+	  int displayPost, int postNum, String searchType, String keyword) throws Exception {
+	 return  dao.boardListPage(displayPost, postNum, searchType, keyword);
 	}
 	
-	//게시물 목록 + 페이징
+	// 게시물 총 갯수
 	@Override
-	public List<BoardVO> boardListPage(int displayPost, int postNum) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.boardListPage(displayPost, postNum);
-	}
-	
-	//게시물 총 갯수
-	@Override
-	public int boardCount() throws Exception {
-		// TODO Auto-generated method stub
-		return dao.boardCount();
+	public int boardCount(String searchType, String keyword) throws Exception {
+	 return dao.boardCount(searchType, keyword);
 	}
 	
 	//게시판 작성
